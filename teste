@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo 2038 | Simulação Executiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: #ffffff; }
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px); }
+        .modal-blur { backdrop-filter: blur(15px); }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .terminal-glow { box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="font-black text-2xl uppercase tracking-widest cursor-pointer" onclick="location.reload()">PROTOCOLO<span class="text-cyan-400">2038</span></div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-20 text-center bg-grid">
+        <h1 class="text-6xl font-black mb-6 uppercase leading-tight">Forjando Líderes em<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-orange-500">Cenários Complexos</span></h1>
+        <div class="flex justify-center gap-4">
+            <button onclick="abrirHubDiagnostico()" class="px-8 py-4 border border-cyan-400 text-cyan-400 rounded-full hover:bg-cyan-400/10 transition-all font-bold">Iniciar Diagnóstico de Perfil</button>
+            <a href="#cenarios" class="px-8 py-4 border border-orange-500 text-orange-500 rounded-full hover:bg-orange-500/10 transition-all font-bold">Iniciar Simulação</a>
+        </div>
+    </header>
+
+    <!-- HUB DE DIAGNÓSTICO -->
+    <div id="diagnostico-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/95 modal-blur">
+        <div class="w-full max-w-4xl bg-[#111] border border-white/10 rounded-2xl p-8 max-h-[90vh] overflow-y-auto scrollbar-hide">
+            <button onclick="fecharDiagnostico()" class="absolute top-6 right-6 text-gray-400 hover:text-white"><i class="fas fa-times text-2xl"></i></button>
+            <div id="hub-content">
+                <h2 class="text-3xl font-bold mb-8 uppercase text-center text-cyan-400">Hub de Diagnóstico Psicométrico</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div onclick="iniciarTeste('analitico')" class="p-6 border border-white/10 rounded-xl hover:border-cyan-400 transition-all cursor-pointer bg-black/50">
+                        <i class="fas fa-brain text-cyan-400 text-3xl mb-4"></i>
+                        <h3 class="font-bold mb-2">Pensamento Analítico</h3>
+                        <p class="text-xs text-gray-400 italic">Teoria do Processo Dual (Kahneman)</p>
+                    </div>
+                    <div onclick="iniciarTeste('humildade')" class="p-6 border border-white/10 rounded-xl hover:border-orange-500 transition-all cursor-pointer bg-black/50">
+                        <i class="fas fa-users-cog text-orange-500 text-3xl mb-4"></i>
+                        <h3 class="font-bold mb-2">Zero Arrogância</h3>
+                        <p class="text-xs text-gray-400 italic">Humildade Intelectual (Leary)</p>
+                    </div>
+                    <div onclick="iniciarTeste('performance')" class="p-6 border border-white/10 rounded-xl hover:border-green-500 transition-all cursor-pointer bg-black/50">
+                        <i class="fas fa-chart-line text-green-500 text-3xl mb-4"></i>
+                        <h3 class="font-bold mb-2">Performance Genuína</h3>
+                        <p class="text-xs text-gray-400 italic">Segurança Psicológica (Edmondson)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO DE CENÁRIOS -->
+    <section id="cenarios" class="py-20 bg-black border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-black uppercase mb-12 text-center">Selecione o Cenário</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <button onclick="iniciarSimulador('espaco')" class="p-8 border border-white/10 rounded-2xl hover:border-cyan-400 transition-all bg-black/50 text-left">
+                    <i class="fas fa-rocket text-4xl text-cyan-400 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Simulador Orbital</h3>
+                    <p class="text-gray-400 text-sm">Crise no vácuo. Decisões técnicas com riscos humanos para a equipe.</p>
+                </button>
+                <button onclick="iniciarSimulador('terremoto')" class="p-8 border border-white/10 rounded-2xl hover:border-yellow-500 transition-all bg-black/50 text-left">
+                    <i class="fas fa-house-damage text-4xl text-yellow-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Crise Sísmica</h3>
+                    <p class="text-gray-400 text-sm">Sismo severo. Dados críticos vs Segurança da equipe.</p>
+                </button>
+                <button onclick="iniciarSimulador('assalto')" class="p-8 border border-white/10 rounded-2xl hover:border-red-500 transition-all bg-black/50 text-left">
+                    <i class="fas fa-user-secret text-4xl text-red-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Invasão Corporativa</h3>
+                    <p class="text-gray-400 text-sm">Invasão armada. Negociação e proteção da equipe.</p>
+                </button>
+            </div>
+            
+            <!-- Simulador Terminal -->
+            <div id="sim-container" class="mt-12 hidden">
+                <div class="p-8 bg-[#111] rounded-2xl terminal-glow border border-white/10">
+                    <div id="sim-terminal" class="font-mono text-sm space-y-4 text-gray-300 border-b border-white/10 pb-6 mb-6"></div>
+                    <div id="sim-controls" class="grid grid-cols-1 gap-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- MOTOR DE DIAGNÓSTICO ---
+        const diagnosticos = {
+            analitico: { titulo: "Pensamento Analítico", ref: "Kahneman (2011)", p: [
+                { q: "Um projeto R&D consumiu 90% do budget e tem 10% de chance de sucesso. Uma nova alternativa custa 10% do budget com 80% de sucesso. Decisão?", ops: ["Insisto no projeto atual.", "Cancelo e migro para a nova opção."] },
+                { q: "O mercado elogia o produto, mas dados reais mostram que 80% abandonam o uso em 7 dias. O que prevalece?", ops: ["O feedback do mercado (vendas iniciais).", "Os dados reais de uso e abandono."] },
+                { q: "Orçamento estimado pela equipe comercial parece superestimado em 30%. O que faz?", ops: ["Negocio um desconto de 15% sobre o valor sugerido.", "Solicito os custos de produção reais para refazer o orçamento."] },
+                { q: "Lançamento de produto: Onde a segurança é maior?", ops: ["Cenário com '20% de chance de falha'.", "Cenário com '80% de chance de sucesso'."] },
+                { q: "Como toma decisões complexas?", ops: ["Baseado na intuição de especialistas 'estrela'.", "Baseado em modelos de probabilidade históricos."] }
+            ]},
+            humildade: { titulo: "Zero Arrogância", ref: "Leary (2017)", p: [
+                { q: "Colaborador aponta erro grave no seu slide perante investidores. Reação?", ops: ["Corrijo em particular depois.", "Agradeço na hora e corrijo publicamente."] },
+                { q: "Pesquisa aponta que você microgerencia a equipe. O que diz?", ops: ["Eles são júnior e precisam de supervisão.", "Admito a falha e peço ajuda para delegar."] },
+                { q: "O conselho reprovou sua estratégia. Como fala com a equipe?", ops: ["Fomos voto vencido pelo conselho.", "Alinho a nova visão com transparência."] },
+                { q: "Brainstorming complexo. Como abre?", ops: ["Apresento minha visão inicial.", "Exponho o problema e sou o último a falar."] },
+                { q: "Patrocinou iniciativa que fracassou. O que foca no post-mortem?", ops: ["Fatores externos do mercado.", "Minhas falhas e aprendizado da equipe."] }
+            ]},
+            performance: { titulo: "Performance Genuína", ref: "Edmondson (2018)", p: [
+                { q: "Top seller é tóxico com a equipe. Decisão?", ops: ["Mantenho-o pelos resultados.", "Exijo mudança imediata ou demito."] },
+                { q: "Equipe falha em projeto piloto. Como encerra?", ops: ["Busco culpados pela falha.", "Celebro o erro inteligente e extraio lições."] },
+                { q: "48h para a meta anual. Equipe exausta.", ops: ["Sprint obrigatório.", "Protejo a equipe, aceito não bater a meta."] },
+                { q: "Falha técnica sua causa perda de um cliente.", ops: ["Culpo o analista de execução.", "Assumo a falha sistêmica e lidero reparação."] },
+                { q: "Oportunidade na zona cinzenta ética. O que faz?", ops: ["Aproveito, resultado em primeiro lugar.", "Recuso, integridade é o maior ativo."] }
+            ]}
+        };
+
+        function abrirHubDiagnostico() { document.getElementById('diagnostico-modal').classList.remove('hidden'); document.getElementById('diagnostico-modal').classList.add('flex'); }
+        function fecharDiagnostico() { document.getElementById('diagnostico-modal').classList.add('hidden'); }
+
+        function iniciarTeste(tipo) {
+            const hub = document.getElementById('hub-content');
+            hub.innerHTML = `<input id="email-input" type="email" placeholder="E-mail corporativo registrado" class="w-full p-4 bg-black border border-white/20 rounded mb-4 text-white">
+                             <button onclick="renderQuestao('${tipo}', 0, 0)" class="w-full py-3 bg-cyan-500 rounded-full font-bold">Validar E-mail</button>`;
+        }
+
+        function renderQuestao(tipo, qIndex, score) {
+            const data = diagnosticos[tipo];
+            if (qIndex >= 5) {
+                document.getElementById('hub-content').innerHTML = `<h2 class="text-4xl text-center">${(score/100)*100}%</h2><p class="text-center">${data.ref}</p><button onclick="fecharDiagnostico()" class="mt-4 w-full py-2 bg-white/10 rounded">Fechar</button>`;
+                return;
+            }
+            const q = data.p[qIndex];
+            document.getElementById('hub-content').innerHTML = `<p class="mb-6 font-bold">${q.q}</p>${q.ops.map((o,i) => `<button onclick="renderQuestao('${tipo}', ${qIndex+1}, ${score+(i==1?20:0)})" class="w-full p-3 border border-white/10 hover:border-cyan-400 text-left mb-2">${o}</button>`).join('')}`;
+        }
+
+        // --- MOTOR DE SIMULAÇÃO ---
+        const games = {
+            espaco: { msg: "Anomalia no reator. O Júnior sugere parar, o Sénior ignora. Decisão?", ops: ["Ignorar Júnior (Autoridade)", "Parar e validar (Segurança total)"] },
+            terremoto: { msg: "Sismo. Dados críticos (servidores) vs Colaborador preso. Onde foca?", ops: ["Servidores (Dados valem milhões)", "Resgate (A vida é prioridade)"] },
+            assalto: { msg: "Invasão na sala. Segurança tem chance de ataque. O que faz?", ops: ["Ataque (Força)", "Negociação (Evitar risco humano)"] }
+        };
+
+        function iniciarSimulador(tipo) {
+            const container = document.getElementById('sim-container');
+            container.classList.remove('hidden');
+            const terminal = document.getElementById('sim-terminal');
+            terminal.innerHTML = `<p class="text-cyan-400 font-bold">${games[tipo].msg}</p>`;
+            document.getElementById('sim-controls').innerHTML = games[tipo].ops.map(o => `<button onclick="finalizarSim('${o}')" class="p-3 bg-white/5 border hover:border-orange-500">${o}</button>`).join('');
+        }
+
+        function finalizarSim(escolha) {
+            document.getElementById('sim-terminal').innerHTML = `<p class="text-green-400 font-bold">Decisão: "${escolha}". Analisando impacto na equipe...</p>`;
+            document.getElementById('sim-controls').innerHTML = `<button onclick="document.getElementById('sim-container').classList.add('hidden')" class="w-full py-2 bg-cyan-500">Encerrar</button>`;
+        }
+    </script>
+</body>
+</html>
