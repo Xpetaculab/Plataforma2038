@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>,
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo 2038 | Simulação Executiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            cyan: '#00e5ff',
+                            orange: '#ff4d00',
+                            dark: '#0a0a0a',
+                            panel: '#111111'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Urbanist', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Urbanist:wght@400;700;900&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: #ffffff; }
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+        .text-glow-cyan { text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .text-glow-orange { text-shadow: 0 0 10px rgba(255, 77, 0, 0.5); }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 229, 255, 0.1) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.5;
+            animation: scanline 6s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden relative">
+
+    <!-- Barra de Navegação -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 font-display font-black text-2xl tracking-widest uppercase cursor-pointer" onclick="window.scrollTo(0,0)">
+                    PROTOCOLO<span class="text-brand-cyan">2038</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#teste" class="hover:text-brand-cyan px-3 py-2 rounded-md text-sm font-medium transition-colors">O Teste</a>
+                        <a href="#cenarios" class="hover:text-brand-orange px-3 py-2 rounded-md text-sm font-medium transition-colors">Simulador</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-grid">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-cyan/20 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h1 class="font-display text-5xl md:text-7xl font-black mb-6 uppercase tracking-tight">
+                Forjando Líderes em <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-orange">Cenários Complexos</span>
+            </h1>
+            <p class="mt-4 max-w-2xl text-xl text-gray-400 mx-auto mb-10">
+                Uma plataforma imersiva que une Avaliação Executiva e Gamificação. Construa equipas de alta performance, tome decisões críticas e prove que a arrogância não tem lugar no futuro.
+            </p>
+            <a href="#cenarios" class="inline-flex items-center justify-center px-8 py-4 border border-brand-cyan text-brand-cyan hover:bg-brand-cyan hover:text-black font-bold rounded-full transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-play mr-3"></i> Iniciar Simulação
+            </a>
+        </div>
+    </header>
+
+    <!-- O Teste dos Líderes -->
+    <section id="teste" class="py-20 relative border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 border-l-4 border-brand-cyan pl-4 uppercase">
+                    Módulo 1: O Teste
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl">Diagnóstico comportamental profundo para mapear o seu perfil, identificando vieses, capacidade analítica e humildade intelectual.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-brand-panel p-8 rounded-2xl border border-white/5 hover:border-brand-cyan/50 transition-colors">
+                    <div class="w-14 h-14 bg-brand-cyan/10 text-brand-cyan rounded-full flex items-center justify-center text-2xl mb-6">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Pensamento Analítico</h3>
+                    <p class="text-gray-400">Avaliação da sua capacidade de procurar informações incompletas antes de tomar uma decisão crítica no conselho.</p>
+                </div>
+                <div class="bg-brand-panel p-8 rounded-2xl border border-white/5 hover:border-brand-orange/50 transition-colors">
+                    <div class="w-14 h-14 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-2xl mb-6">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Zero Arrogância</h3>
+                    <p class="text-gray-400">Deteção de padrões de ego. Medimos a sua disposição para ouvir a equipa e rever estratégias quando o contexto muda.</p>
+                </div>
+                <div class="bg-brand-panel p-8 rounded-2xl border border-white/5 hover:border-white/50 transition-colors">
+                    <div class="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center text-2xl mb-6">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Performance Genuína</h3>
+                    <p class="text-gray-400">Foco em construir vitórias consistentes mantendo o respeito mútuo. Resultados alcançados à custa da equipa são penalizados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seleção de Cenários -->
+    <section id="cenarios" class="py-20 relative bg-black border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl font-bold mb-4 uppercase tracking-widest text-brand-orange">
+                    Selecione o Cenário de Crise
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Escolha o ambiente onde irá testar as suas capacidades de liderança. A IA irá adaptar o simulador ao contexto escolhido.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cenário 1: Espaço -->
+                <button onclick="carregarCenario('espaco')" class="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-brand-cyan transition-all duration-300 text-left">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/90 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop" alt="Espaço" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="relative z-20 p-8 h-64 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-brand-cyan/20 text-brand-cyan rounded-full flex items-center justify-center text-xl mb-4 backdrop-blur-sm">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold mb-2">Simulador Orbital</h3>
+                        <p class="text-sm text-gray-300">Missão espacial. Falhas mecânicas e gestão de equipa no vácuo.</p>
+                    </div>
+                </button>
+
+                <!-- Cenário 2: Terremoto -->
+                <button onclick="carregarCenario('terremoto')" class="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-yellow-500 transition-all duration-300 text-left">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/90 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1576722055106-2591be67c293?q=80&w=800&auto=format&fit=crop" alt="Terremoto" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="relative z-20 p-8 h-64 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-yellow-500/20 text-yellow-500 rounded-full flex items-center justify-center text-xl mb-4 backdrop-blur-sm">
+                            <i class="fas fa-house-damage"></i>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold mb-2">Crise Sísmica</h3>
+                        <p class="text-sm text-gray-300">Sismo de 7.2 no escritório corporativo. Vidas vs Dados.</p>
+                    </div>
+                </button>
+
+                <!-- Cenário 3: Assalto -->
+                <button onclick="carregarCenario('assalto')" class="group relative overflow-hidden rounded-2xl border border-white/10 hover:border-red-500 transition-all duration-300 text-left">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/90 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1618329027150-1d85f818eb8a?q=80&w=800&auto=format&fit=crop" alt="Assalto" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-700">
+                    <div class="relative z-20 p-8 h-64 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-xl mb-4 backdrop-blur-sm">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold mb-2">Invasão Corporativa</h3>
+                        <p class="text-sm text-gray-300">Assalto com reféns durante reunião executiva. Calma sob pressão.</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulador Interativo (Escondido até seleção) -->
+    <section id="simulador-container" class="py-20 relative bg-[#050505] border-t border-white/10 hidden">
+        <div class="scanline"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 flex justify-between items-end border-b border-white/10 pb-6">
+                <div>
+                    <h2 class="font-display text-3xl font-bold uppercase" id="sim-title">
+                        Módulo 2: Simulador
+                    </h2>
+                    <p class="text-gray-400 mt-2">Interaja com a IA e tome decisões críticas.</p>
+                </div>
+                <button onclick="document.getElementById('cenarios').scrollIntoView({behavior: 'smooth'})" class="text-sm text-gray-500 hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i> Trocar Cenário
+                </button>
+            </div>
+
+            <!-- Interface do Jogo -->
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Terminal de Chat (IA) -->
+                <div class="flex-1 bg-brand-panel rounded-lg border border-white/20 overflow-hidden flex flex-col h-[550px] shadow-2xl relative">
+                    <div id="terminal-header" class="px-4 py-3 border-b flex justify-between items-center transition-colors">
+                        <div class="flex items-center">
+                            <i id="terminal-icon" class="fas fa-robot mr-3"></i>
+                            <span id="terminal-name" class="font-mono text-sm tracking-widest font-bold">NEXUS_IA // CONSOLA</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Área de Mensagens -->
+                    <div id="game-chat" class="flex-1 overflow-y-auto p-6 font-mono text-sm flex flex-col space-y-4 scrollbar-hide">
+                        <!-- Conteúdo injetado via JS -->
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div id="game-actions" class="p-4 bg-black/80 backdrop-blur border-t border-white/10 grid gap-2">
+                        <!-- Opções injetadas via JS -->
+                    </div>
+                </div>
+
+                <!-- Status da Nave/Crise -->
+                <div class="w-full lg:w-80 flex flex-col gap-6">
+                    <div class="bg-brand-panel p-6 rounded-lg border border-white/10">
+                        <h3 class="font-display font-bold text-lg mb-4 text-gray-300 uppercase tracking-wider">Métricas de Liderança</h3>
+                        
+                        <div class="mb-5">
+                            <div class="flex justify-between text-xs mb-2 font-mono">
+                                <span class="text-brand-cyan">Performance (Resultados)</span>
+                                <span id="score-perf">50%</span>
+                            </div>
+                            <div class="w-full bg-black rounded-full h-3 border border-white/5">
+                                <div id="bar-perf" class="bg-brand-cyan h-full rounded-full transition-all duration-700" style="width: 50%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-2 font-mono">
+                                <span class="text-brand-orange">Gestão Humana (Zero Arrogância)</span>
+                                <span id="score-hum">50%</span>
+                            </div>
+                            <div class="w-full bg-black rounded-full h-3 border border-white/5">
+                                <div id="bar-hum" class="bg-brand-orange h-full rounded-full transition-all duration-700" style="width: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-panel p-6 rounded-lg border border-white/10 flex-1 flex flex-col justify-center items-center text-center">
+                        <div id="mission-status" class="w-24 h-24 rounded-full border-4 border-gray-600 flex items-center justify-center text-4xl text-gray-600 mb-6 transition-all duration-500">
+                            <i id="status-icon" class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="font-display font-bold uppercase tracking-widest" id="mission-status-text">AGUARDANDO...</h4>
+                        <p class="text-xs text-gray-500 mt-3 font-mono" id="mission-subtext">Selecione um cenário acima.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 bg-black text-center border-t border-white/10 w-full">
+        <p class="text-gray-500 font-mono text-sm">© 2038 Xpetaculab. Preparando líderes para o desconhecido.</p>
+    </footer>
+
+    <!-- Script de Lógica do Simulador -->
+    <script>
+        // Dados dos Cenários
+        const cenariosData = {
+            espaco: {
+                title: "Simulador Orbital",
+                themeColor: "text-brand-cyan",
+                bgHeader: "bg-brand-cyan/10",
+                borderColor: "border-brand-cyan/30",
+                icon: "fa-rocket",
+                aiName: "NEXUS_IA // SISTEMA ORBITAL",
+                nodes: [
+                    {
+                        text: "Saudações, Comandante. Detetámos uma anomalia no reator do Setor B. O Especialista Técnico (Nível Júnior) sugere desligar os propulsores temporariamente para análise minuciosa. No entanto, o seu Engenheiro Sénior diz que é uma perda de tempo e que devemos ignorar o novato. Como procedemos?",
+                        options: [
+                            { text: "[A] Ignorar o Júnior e manter a rota (Ouvir o Sénior)", perf: 10, hum: -30, nextNode: 1, userText: "Manter a rota. O Sénior tem mais experiência, não temos tempo a perder." },
+                            { text: "[B] Suspender propulsores e ouvir a análise do Júnior", perf: -10, hum: 20, nextNode: 2, userText: "Suspendam os propulsores. Quero ouvir o que o Júnior encontrou." }
+                        ]
+                    },
+                    {
+                        text: "O reator sofreu uma microexplosão. A rota foi mantida, mas a equipa perdeu a confiança na sua escuta. A sua arrogância teve um custo de moral severo.<br><br>ATUALIZAÇÃO: Há uma tempestade solar a aproximar-se e precisamos de reparações urgentes.",
+                        options: [
+                            { text: "[A] Exigir que a equipa trabalhe turnos duplos sem descanso", perf: -20, hum: -40, nextNode: -1, gameOverMsg: "CRÍTICO: Motim a bordo. A equipa, exausta e desrespeitada, recusou-se a trabalhar. A sua liderança focou-se apenas em resultados brutos e destruiu o time.", win: false },
+                            { text: "[B] Assumir o erro anterior, reunir a equipa e pedir ideias", perf: 30, hum: 30, nextNode: -1, gameOverMsg: "A equipa valorizou a sua vulnerabilidade e humildade. Juntos encontraram um atalho seguro para as reparações. Excelente recuperação sob pressão.", win: true }
+                        ]
+                    },
+                    {
+                        text: "Decisão correta. O Júnior encontrou uma falha fatal estrutural. Prevenimos a explosão! A viagem atrasou um pouco, mas a equipa sente-se valorizada e unida.<br><br>ATUALIZAÇÃO: Há uma tempestade solar a aproximar-se da nossa posição.",
+                        options: [
+                            { text: "[A] Redirecionar todos os escudos pessoalmente (microgestão)", perf: 10, hum: -20, nextNode: -1, gameOverMsg: "Sobrevivemos à tempestade, mas a equipa sentiu que você não confia neles para executar táticas sob pressão. Liderança razoável, mas pecou pelo ego.", win: false },
+                            { text: "[B] Delegar a gestão dos escudos à equipa técnica de imediato", perf: 40, hum: 30, nextNode: -1, gameOverMsg: "Delegação perfeita. A equipa técnica otimizou os escudos melhor do que o sistema central. Você construiu um time de alta performance e confiança. Missão cumprida!", win: true }
+                        ]
+                    }
+                ]
+            },
+            terremoto: {
+                title: "Crise Sísmica",
+                themeColor: "text-yellow-500",
+                bgHeader: "bg-yellow-500/10",
+                borderColor: "border-yellow-500/30",
+                icon: "fa-house-damage",
+                aiName: "SYS_SECURITY // ALERTA PRÉDIO",
+                nodes: [
+                    {
+                        text: "ALERTA SÍSMICO: Sismo de magnitude 7.2 detetado. Energia cortada. Um colaborador de limpeza está preso sob escombros no Setor C. Simultaneamente, a sala de servidores no Setor B (que contém dados críticos e não guardados) começou a inundar. Os recursos de resgate são limitados.",
+                        options: [
+                            { text: "[A] Enviar a equipa para salvar os servidores primeiro", perf: 20, hum: -40, nextNode: 1, userText: "Os dados são a espinha dorsal da empresa. Salvem os servidores, depois tentamos ajudar o colaborador." },
+                            { text: "[B] Priorizar totalmente o resgate do colaborador preso", perf: -20, hum: 30, nextNode: 2, userText: "Nenhum dado vale uma vida. Vamos resgatar o nosso colaborador imediatamente." }
+                        ]
+                    },
+                    {
+                        text: "Os dados foram salvos. No entanto, a equipa teve de resgatar o colaborador mais tarde, o qual sofreu ferimentos graves. O clima na empresa é de horror e a confiança na sua liderança humana desmoronou.<br><br>ATUALIZAÇÃO: Foram detetadas réplicas sísmicas. O edifício está instável.",
+                        options: [
+                            { text: "[A] Exigir que voltem à sala de servidores para iniciar backups", perf: -30, hum: -40, nextNode: -1, gameOverMsg: "TRAGÉDIA: A réplica soterrou a sala de servidores com a equipa lá dentro. A sua obsessão cega por performance e arrogância em ignorar o perigo humano resultou num desastre.", win: false },
+                            { text: "[B] Ordenar a evacuação imediata do edifício", perf: 10, hum: 20, nextNode: -1, gameOverMsg: "Conseguiu evacuar todos a tempo. Sobreviveram, mas o ambiente corporativo ficará marcado para sempre pela sua decisão inicial insensível. A liderança fraturou-se.", win: false }
+                        ]
+                    },
+                    {
+                        text: "O colaborador foi resgatado a tempo, ileso. A equipa sentiu imenso orgulho pela sua decisão ética. Perdemos 30% dos dados daquele servidor, mas estamos vivos.<br><br>ATUALIZAÇÃO: Foram detetadas réplicas sísmicas severas.",
+                        options: [
+                            { text: "[A] Organizar uma evacuação coordenada com apoio mútuo", perf: 30, hum: 30, nextNode: -1, gameOverMsg: "Todos evacuaram em segurança. Os dados perdidos custaram dinheiro, mas a equipa está mais unida que nunca e disposta a reconstruir tudo rapidamente. Liderança humana triunfou.", win: true },
+                            { text: "[B] Tentar descer aos servidores correndo risco de vida", perf: -20, hum: -10, nextNode: -1, gameOverMsg: "Tentou bancar o herói arriscando vidas sem necessidade. Parte da equipa feriu-se com a réplica. Perdeu-se o controlo da situação.", win: false }
+                        ]
+                    }
+                ]
+            },
+            assalto: {
+                title: "Invasão Corporativa",
+                themeColor: "text-red-500",
+                bgHeader: "bg-red-500/10",
+                borderColor: "border-red-500/30",
+                icon: "fa-user-secret",
+                aiName: "INTEL_POLICIAL // NEGOCIAÇÃO",
+                nodes: [
+                    {
+                        text: "CRÍTICO: Indivíduos armados invadiram a sede durante a sua reunião executiva. Eles exigem que abra o cofre principal imediatamente. O seu Chefe de Segurança sussurra que tem uma pequena janela de 3 segundos para tentar desarmar o líder deles. É arriscado.",
+                        options: [
+                            { text: "[A] Ordenar que o Segurança ataque (Demonstrar força)", perf: 10, hum: -40, nextNode: 1, userText: "Não negociamos com criminosos. Segurança, neutralize o líder agora!" },
+                            { text: "[B] Proibir o ataque, manter a calma e cooperar", perf: -10, hum: 30, nextNode: 2, userText: "Mantenham a calma. Não façam movimentos bruscos. Vou abrir o cofre, apenas não magoem ninguém." }
+                        ]
+                    },
+                    {
+                        text: "O ataque falhou. O Chefe de Segurança foi baleado no ombro. Os assaltantes estão agora em pânico, agressivos e a apontar armas a todos os membros da sua equipa.<br><br>ATUALIZAÇÃO: Exigem a senha em 10 segundos ou disparam.",
+                        options: [
+                            { text: "[A] Tentar impor autoridade e negociar agressivamente", perf: -30, hum: -50, nextNode: -1, gameOverMsg: "FATAL: O seu ego impediu-o de ler a sala. A tentativa de impor poder perante armas causou pânico e violência extrema. A sua liderança falhou na crise primária.", win: false },
+                            { text: "[B] Renders-se totalmente, pedir desculpa e entregar tudo", perf: -20, hum: 10, nextNode: -1, gameOverMsg: "Entregou os bens, mas a equipa ficou profundamente traumatizada pelo risco inútil inicial. A confiança na sua capacidade de avaliar riscos desapareceu.", win: false }
+                        ]
+                    },
+                    {
+                        text: "O cofre foi aberto em paz. Os assaltantes levaram os valores e fugiram sem ferir nenhum colaborador. A polícia acaba de chegar e cercar o perímetro exterior.<br><br>ATUALIZAÇÃO: A equipa está em choque profundo e a imprensa aguarda a sua declaração.",
+                        options: [
+                            { text: "[A] Dar entrevista culpando a equipa de segurança publicamente", perf: 0, hum: -50, nextNode: -1, gameOverMsg: "Tóxico. Transferir a culpa num momento destes destruiu qualquer respeito que a equipa tinha por si. Vidas foram salvas, mas a cultura da empresa morreu hoje.", win: false },
+                            { text: "[B] Blindar a equipa, focar no apoio psicológico e assumir responsabilidade", perf: 20, hum: 40, nextNode: -1, gameOverMsg: "Líder de verdade. Mostrou que os bens materiais se recuperam, mas as pessoas não. A equipa apoia-se em si e a empresa vai dar a volta por cima mais forte do que nunca.", win: true }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Estado Global
+        let activeScenario = null;
+        let currentNode = 0;
+        let scores = { perf: 50, hum: 50 };
+
+        // Elementos DOM
+        const simContainer = document.getElementById('simulador-container');
+        const chatBox = document.getElementById('game-chat');
+        const actionsBox = document.getElementById('game-actions');
+        
+        function carregarCenario(cenarioKey) {
+            activeScenario = cenariosData[cenarioKey];
+            currentNode = 0;
+            scores = { perf: 50, hum: 50 };
+
+            // Mostrar container
+            simContainer.classList.remove('hidden');
+            simContainer.scrollIntoView({ behavior: 'smooth' });
+
+            // Atualizar UI
+            document.getElementById('sim-title').innerText = activeScenario.title;
+            document.getElementById('terminal-name').innerText = activeScenario.aiName;
+            
+            const header = document.getElementById('terminal-header');
+            header.className = `px-4 py-3 border-b flex justify-between items-center transition-colors ${activeScenario.bgHeader} ${activeScenario.borderColor} ${activeScenario.themeColor}`;
+            
+            const icon = document.getElementById('terminal-icon');
+            icon.className = `fas ${activeScenario.icon} mr-3`;
+
+            // Reset Chat e Status
+            chatBox.innerHTML = '';
+            atualizarBarras();
+            resetStatusIcon();
+
+            // Mensagem Inicial
+            setTimeout(() => {
+                addMessage(activeScenario.nodes[0].text, false);
+                renderOptions(activeScenario.nodes[0].options);
+            }, 500);
+        }
+
+        function atualizarBarras() {
+            // Limitar a 0 e 100
+            scores.perf = Math.max(0, Math.min(100, scores.perf));
+            scores.hum = Math.max(0, Math.min(100, scores.hum));
+
+            document.getElementById('score-perf').innerText = `${scores.perf}%`;
+            document.getElementById('bar-perf').style.width = `${scores.perf}%`;
+            
+            document.getElementById('score-hum').innerText = `${scores.hum}%`;
+            document.getElementById('bar-hum').style.width = `${scores.hum}%`;
+        }
+
+        function resetStatusIcon() {
+            const iconContainer = document.getElementById('mission-status');
+            const iconText = document.getElementById('mission-status-text');
+            const subText = document.getElementById('mission-subtext');
+            
+            iconContainer.className = 'w-24 h-24 rounded-full border-4 border-gray-600 flex items-center justify-center text-4xl text-gray-600 mb-6 transition-all duration-500';
+            iconContainer.innerHTML = `<i class="fas ${activeScenario.icon}"></i>`;
+            iconText.innerText = 'EM PROGRESSO';
+            iconText.className = 'font-display font-bold uppercase tracking-widest text-white';
+            subText.innerText = 'Análise em tempo real...';
+        }
+
+        function setGameOverStatus(win) {
+            const iconContainer = document.getElementById('mission-status');
+            const iconText = document.getElementById('mission-status-text');
+            const subText = document.getElementById('mission-subtext');
+
+            if (win) {
+                iconContainer.className = 'w-24 h-24 rounded-full border-4 border-brand-cyan flex items-center justify-center text-4xl text-brand-cyan mb-6 shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all duration-500 scale-110';
+                iconContainer.innerHTML = '<i class="fas fa-check"></i>';
+                iconText.innerText = 'LIDERANÇA APROVADA';
+                iconText.className = 'font-display font-bold uppercase tracking-widest text-brand-cyan text-glow-cyan';
+                subText.innerText = 'Equilíbrio perfeito de humildade e entrega.';
+            } else {
+                iconContainer.className = 'w-24 h-24 rounded-full border-4 border-red-500 flex items-center justify-center text-4xl text-red-500 mb-6 shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all duration-500 scale-110';
+                iconContainer.innerHTML = '<i class="fas fa-times"></i>';
+                iconText.innerText = 'FALHA NO PROTOCOLO';
+                iconText.className = 'font-display font-bold uppercase tracking-widest text-red-500';
+                subText.innerText = 'Arrogância ou má decisão causaram o colapso.';
+            }
+        }
+
+        function addMessage(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = `flex flex-col space-y-2 mt-4 opacity-0 transition-opacity duration-500 ${isUser ? 'items-end' : 'items-start'}`;
+            
+            let innerHTML = '';
+            if (isUser) {
+                innerHTML = `
+                    <span class="text-gray-500 text-xs font-bold">LÍDER DO CONSELHO</span>
+                    <div class="bg-white/10 border border-white/20 p-3 rounded-l-lg rounded-br-lg text-white max-w-[85%] text-sm">
+                        <p>${text}</p>
+                    </div>`;
+            } else {
+                innerHTML = `
+                    <span class="${activeScenario.themeColor} text-xs font-bold opacity-70">${activeScenario.aiName}</span>
+                    <div class="${activeScenario.bgHeader} border ${activeScenario.borderColor} p-4 rounded-r-lg rounded-bl-lg ${activeScenario.themeColor} max-w-[90%] text-sm leading-relaxed shadow-lg">
+                        <p>${text}</p>
+                    </div>`;
+            }
+            
+            div.innerHTML = innerHTML;
+            chatBox.appendChild(div);
+            
+            // Trigger reflow & fade in
+            setTimeout(() => div.classList.remove('opacity-0'), 50);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function renderOptions(options) {
+            actionsBox.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = `text-left px-5 py-3 bg-brand-panel hover:${activeScenario.bgHeader} border border-white/10 hover:${activeScenario.borderColor} transition-colors rounded-lg text-sm font-mono flex items-center justify-between group`;
+                btn.innerHTML = `<span>${opt.text}</span> <i class="fas fa-chevron-right text-gray-600 group-hover:${activeScenario.themeColor} transition-colors"></i>`;
+                
+                btn.onclick = () => {
+                    // Limpa botões
+                    actionsBox.innerHTML = '';
+                    
+                    // Adiciona mensagem do utilizador
+                    addMessage(opt.userText || opt.text, true);
+                    
+                    // Atualiza pontuação
+                    scores.perf += opt.perf;
+                    scores.hum += opt.hum;
+                    atualizarBarras();
+
+                    // Lógica do próximo passo
+                    setTimeout(() => {
+                        if (opt.nextNode === -1) {
+                            // Fim de jogo
+                            addMessage(opt.gameOverMsg, false);
+                            setGameOverStatus(opt.win);
+                            
+                            // Botão de reinício
+                            setTimeout(() => {
+                                const restartBtn = document.createElement('button');
+                                restartBtn.className = 'text-center w-full px-5 py-4 bg-white/5 hover:bg-white/20 border border-white/20 transition-colors rounded-lg font-display font-bold uppercase tracking-widest text-white mt-2';
+                                restartBtn.innerText = "NOVA SIMULAÇÃO";
+                                restartBtn.onclick = () => document.getElementById('cenarios').scrollIntoView({behavior: 'smooth'});
+                                actionsBox.appendChild(restartBtn);
+                            }, 1500);
+
+                        } else {
+                            // Próximo Nó
+                            currentNode = opt.nextNode;
+                            const nextData = activeScenario.nodes[currentNode];
+                            addMessage(nextData.text, false);
+                            setTimeout(() => {
+                                renderOptions(nextData.options);
+                            }, 1000);
+                        }
+                    }, 1200);
+                };
+                actionsBox.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
