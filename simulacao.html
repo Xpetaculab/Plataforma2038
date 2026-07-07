@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Comando | Plataforma 2038</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(222, 255, 154, 0.2); }
+        .crisis-card { transition: all 0.3s ease; }
+        .crisis-card:hover { border-color: #deff9a; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        body { background-color: #020617; }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen p-4 md:p-8">
+
+    <header class="max-w-6xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <h1 class="text-4xl font-bold text-white tracking-tight">Centro de Comando <span class="text-[#deff9a]">2038</span></h1>
+            <p class="text-slate-400 mt-2">Escolha uma situação crítica e teste a resiliência da sua liderança.</p>
+        </div>
+        <div class="glass px-8 py-4 rounded-full border-l-4 border-[#deff9a] flex items-center shadow-lg">
+            <span class="text-sm uppercase tracking-widest text-slate-400 font-semibold">Resiliência:</span>
+            <span id="resilience-score" class="text-3xl font-bold text-white ml-3">100%</span>
+        </div>
+    </header>
+
+    <main id="game-grid" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Cenários injetados dinamicamente via JS -->
+    </main>
+
+    <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50">
+        <div class="glass p-8 rounded-2xl max-w-2xl w-full border border-slate-700 shadow-2xl">
+            <h2 id="modal-title" class="text-3xl font-bold text-[#deff9a] mb-4"></h2>
+            <p id="modal-text" class="text-lg text-slate-300 mb-8 leading-relaxed"></p>
+            <div id="modal-actions" class="grid grid-cols-1 gap-4"></div>
+        </div>
+    </div>
+
+    <script>
+        const scenarios = [
+            { id: 1, title: "O Dia Zero", text: "Dados de 2 milhões de utilizadores expostos na Dark Web. A imprensa exige uma declaração. Como você lidera a crise?", options: [{text: "Transparência total imediata", impact: -10}, {text: "Contenção silenciosa (Risco de fugas)", impact: -25}] },
+            { id: 2, title: "Colapso do Legado", text: "O sistema principal parou. Prejuízo de 100k€/hora. Onde alocar a equipa técnica para conter a hemorragia?", options: [{text: "Reparo de emergência (Patch rápido)", impact: -5}, {text: "Reestruturação profunda (Paragem longa)", impact: -20}] },
+            { id: 3, title: "Êxodo de Talentos", text: "O seu arquiteto principal saiu sem documentação. Como reagir para evitar a paralisia do time?", options: [{text: "Contratar consultoria externa cara", impact: -15}, {text: "Mentoria interna e refatoração", impact: -5}] },
+            { id: 4, title: "Dilema Algorítmico", text: "O novo motor de IA apresenta viés discriminatório, mas gera lucros recorde. Qual a decisão ética?", options: [{text: "Desligar o sistema imediatamente", impact: -30}, {text: "Ajustar em produção (risco reputacional)", impact: -10}] }
+        ];
+
+        let score = 100;
+        const grid = document.getElementById('game-grid');
+
+        // Renderização inicial dos cards
+        scenarios.forEach(s => {
+            const card = document.createElement('div');
+            card.className = "crisis-card glass p-8 rounded-xl border border-slate-700 cursor-pointer";
+            card.innerHTML = `
+                <h3 class="text-2xl font-bold text-white mb-3">${s.title}</h3>
+                <p class="text-slate-400 mb-4 leading-relaxed">${s.text.substring(0, 80)}...</p>
+                <span class="text-[#deff9a] font-bold underline">Analisar Crise &rarr;</span>
+            `;
+            card.onclick = () => openScenario(s);
+            grid.appendChild(card);
+        });
+
+        // Manipulação do Modal
+        function openScenario(s) {
+            document.getElementById('modal-title').innerText = s.title;
+            document.getElementById('modal-text').innerText = s.text;
+            const actions = document.getElementById('modal-actions');
+            actions.innerHTML = '';
+            
+            s.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-800 hover:bg-[#deff9a] hover:text-black p-4 rounded-lg font-bold transition text-left border border-slate-600 flex justify-between items-center";
+                btn.innerHTML = `<span>${opt.text}</span> <span class="text-xs opacity-50">Impacto: ${opt.impact}</span>`;
+                btn.onclick = () => {
+                    score += opt.impact;
+                    document.getElementById('resilience-score').innerText = Math.max(0, score) + "%";
+                    closeModal();
+                };
+                actions.appendChild(btn);
+            });
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
