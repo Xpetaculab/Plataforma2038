@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xpetaculab | Protocolo 2038</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 2rem; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+
+    <!-- Hero -->
+    <header class="gradient-bg text-white h-screen flex flex-col items-center justify-center text-center p-6">
+        <h1 class="text-6xl font-extrabold mb-4 uppercase tracking-widest">Xpetaculab</h1>
+        <p class="text-xl opacity-80 uppercase tracking-widest">Consultoria & Eventos de Aprendizagem</p>
+        <p class="mt-6 text-lg italic">Pensamento, arte e humanidade nas corporações.</p>
+    </header>
+
+    <!-- Exemplo de Missão -->
+    <section class="max-w-4xl mx-auto" id="missao">
+        <h2 class="text-4xl font-bold mb-8 text-slate-800">Exemplo de uma Missão</h2>
+        <div class="bg-white p-8 rounded-xl shadow-lg border">
+            <h3 class="text-2xl font-bold mb-4">PAINEL DE INTELIGÊNCIA (IA)</h3>
+            <p class="mb-4">O sistema identificou uma mudança relevante após analisar indicadores de mercado.</p>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-100 p-4 rounded text-center"><strong>Mercado:</strong> +41%</div>
+                <div class="bg-slate-100 p-4 rounded text-center"><strong>Tempo:</strong> 8 meses</div>
+                <div class="bg-slate-100 p-4 rounded text-center"><strong>Share:</strong> 12,4%</div>
+            </div>
+            
+            <div class="flex items-center justify-between bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
+                <div>
+                    <h4 class="font-bold text-blue-800">Recomendação IA:</h4>
+                    <p class="text-blue-900">Descontinuar 40% do portfólio e focar em soluções personalizadas.</p>
+                </div>
+                <button onclick="document.getElementById('interacao-section').classList.remove('hidden')" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 font-semibold transition">
+                    Interagir
+                </button>
+            </div>
+        </div>
+
+        <!-- Seção de Interação -->
+        <div id="interacao-section" class="hidden mt-8 bg-slate-900 text-white p-8 rounded-xl shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">Registro de Decisão do Conselho</h3>
+            <form id="decisaoForm" onsubmit="enviarParaGoogle(event)" class="space-y-4">
+                <div>
+                    <label class="block mb-2">Número do Conselho:</label>
+                    <input type="text" name="conselho" id="conselho" required class="w-full p-2 rounded text-slate-900">
+                </div>
+                <div>
+                    <label class="block mb-2">Qual opção deseja seguir?</label>
+                    <select name="opcao" id="opcao" required class="w-full p-2 rounded text-slate-900">
+                        <option>Aprovar integralmente.</option>
+                        <option>Aprovar com ajustes.</option>
+                        <option>Construir estratégia alternativa.</option>
+                        <option>Abrir janela de perspectiva.</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-2">Justificativa:</label>
+                    <textarea name="justificativa" id="justificativa" required class="w-full p-2 rounded text-slate-900 h-24"></textarea>
+                </div>
+                <button type="submit" id="btnSubmit" class="bg-green-600 text-white px-8 py-3 rounded hover:bg-green-700 w-full font-bold">
+                    Registrar Resposta
+                </button>
+            </form>
+            <div id="status-registro" class="hidden mt-4 p-4 bg-green-800 rounded text-center font-bold">
+                Resposta devidamente registrada e enviada por e-mail!
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function enviarParaGoogle(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.innerText = 'Enviando...';
+            
+            const dados = {
+                conselho: document.getElementById('conselho').value,
+                opcao: document.getElementById('opcao').value,
+                justificativa: document.getElementById('justificativa').value
+            };
+
+            const url = 'https://script.google.com/macros/s/AKfycbynh6wvF3UQKHGOwugjvrAXHdBpdtgXvAfGoipjl7MgmDX58bXS8afWrCMMil9cmbhNpA/exec';
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+                document.getElementById('status-registro').classList.remove('hidden');
+                document.getElementById('decisaoForm').reset();
+                setTimeout(() => {
+                    document.getElementById('interacao-section').classList.add('hidden');
+                    document.getElementById('status-registro').classList.add('hidden');
+                }, 3000);
+            } catch (error) {
+                alert('Erro ao enviar. Verifique sua conexão.');
+            } finally {
+                btn.innerText = 'Registrar Resposta';
+            }
+        }
+    </script>
+</body>
+</html>
