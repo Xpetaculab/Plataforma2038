@@ -68,7 +68,7 @@
                 </button>
             </form>
             <div id="status-registro" class="hidden mt-4 p-4 bg-green-800 rounded text-center font-bold">
-                Resposta devidamente registrada e enviada por e-mail!
+                Resposta enviada!
             </div>
         </div>
     </section>
@@ -88,21 +88,23 @@
             const url = 'https://script.google.com/macros/s/AKfycbynh6wvF3UQKHGOwugjvrAXHdBpdtgXvAfGoipjl7MgmDX58bXS8afWrCMMil9cmbhNpA/exec';
 
             try {
+                // Ao usar 'no-cors', não conseguimos ler a resposta, mas o envio é disparado.
                 await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dados)
                 });
+                
                 document.getElementById('status-registro').classList.remove('hidden');
                 document.getElementById('decisaoForm').reset();
+                
                 setTimeout(() => {
                     document.getElementById('interacao-section').classList.add('hidden');
                     document.getElementById('status-registro').classList.add('hidden');
                 }, 3000);
             } catch (error) {
-                alert('Erro ao enviar. Verifique sua conexão.');
+                console.error("Erro no envio:", error);
+                alert('Erro ao enviar. Verifique se a implantação do Apps Script está como "Qualquer pessoa".');
             } finally {
                 btn.innerText = 'Registrar Resposta';
             }
