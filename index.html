@@ -90,10 +90,11 @@
                 justificativa: document.getElementById('justificativa').value
             };
 
+            // URL atualizada com o novo endpoint do Google Apps Script
             const url = 'https://script.google.com/macros/s/AKfycbzREy8haUy8JcGKBVXUBfEK9CZRq26Z2zwJpIM7meaXejje3pWY8NAuDjghwz2B-IxCvw/exec';
 
             try {
-                const response = await fetch(url, {
+                await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: JSON.stringify(dados)
@@ -107,8 +108,8 @@
                     document.getElementById('status-registro').classList.add('hidden');
                 }, 3000);
             } catch (error) {
-                console.error("Erro detalhado no envio:", error);
-                alert('Erro ao enviar. Verifique se autorizou o script no painel do Apps Script.');
+                console.error("Erro no envio:", error);
+                alert('Erro ao enviar. Verifique as permissões de acesso no Google Apps Script.');
             } finally {
                 btn.innerText = 'Registrar Resposta';
             }
