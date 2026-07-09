@@ -68,7 +68,7 @@
                 </button>
             </form>
             <div id="status-registro" class="hidden mt-4 p-4 bg-green-800 rounded text-center font-bold">
-                Resposta enviada!
+                Resposta enviada com sucesso!
             </div>
         </div>
     </section>
@@ -85,10 +85,9 @@
                 justificativa: document.getElementById('justificativa').value
             };
 
-            const url = 'https://script.google.com/macros/s/AKfycbynh6wvF3UQKHGOwugjvrAXHdBpdtgXvAfGoipjl7MgmDX58bXS8afWrCMMil9cmbhNpA/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbyugAThn-1bNdCydKPYGP5NoKtYDeT8ZtRmSuHaSUjQj-sVMi30TbqeWTV-zhSNDx1E7A/exec';
 
             try {
-                // Ao usar 'no-cors', não conseguimos ler a resposta, mas o envio é disparado.
                 await fetch(url, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -104,7 +103,7 @@
                 }, 3000);
             } catch (error) {
                 console.error("Erro no envio:", error);
-                alert('Erro ao enviar. Verifique se a implantação do Apps Script está como "Qualquer pessoa".');
+                alert('Erro ao enviar. Certifique-se de que a implantação está definida como "Qualquer pessoa" no Google Apps Script.');
             } finally {
                 btn.innerText = 'Registrar Resposta';
             }
