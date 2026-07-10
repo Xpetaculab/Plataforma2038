@@ -26,61 +26,84 @@
     <div id="toast-notification" class="hidden fixed bottom-5 right-5 p-4 rounded-xl shadow-2xl text-white font-medium z-50 transition-all duration-300 transform translate-y-0"></div>
 
     <!-- Cabeçalho Principal (Apresentação da Marca) -->
-    <header class="gradient-bg text-white h-[60vh] flex flex-col items-center justify-center text-center p-6 shadow-xl relative overflow-hidden">
+    <header class="gradient-bg text-white h-[45vh] flex flex-col items-center justify-center text-center p-6 shadow-xl relative overflow-hidden">
         <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div class="relative z-10 max-w-3xl">
-            <h1 class="text-5xl md:text-7xl font-black mb-4 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">
+            <h1 class="text-4xl md:text-6xl font-black mb-3 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">
                 Xpetaculab
             </h1>
-            <p class="text-lg md:text-xl opacity-90 uppercase tracking-wider font-medium text-slate-300">
+            <p class="text-base md:text-lg opacity-95 uppercase tracking-wider font-semibold text-slate-300">
                 Consultoria & Eventos de Aprendizagem
             </p>
-            <div class="w-24 h-1 bg-indigo-500 mx-auto my-6 rounded-full"></div>
-            <p class="text-lg italic text-slate-300 max-w-xl mx-auto">
+            <div class="w-16 h-1 bg-indigo-500 mx-auto my-4 rounded-full"></div>
+            <p class="text-base italic text-slate-300 max-w-xl mx-auto">
                 "Pensamento, arte e humanidade nas corporações."
             </p>
         </div>
     </header>
 
     <!-- Seção Principal da Missão de Treinamento -->
-    <main class="max-w-4xl mx-auto px-4 py-12 -mt-16 relative z-20">
+    <main class="max-w-4xl mx-auto px-4 py-8 -mt-16 relative z-20">
+        
+        <!-- Título Principal da Plataforma (Corrigido para Branco com alto contraste sobre o fundo escuro do cabeçalho) -->
+        <div class="mb-6 text-center md:text-left fade-in">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white drop-shadow-md tracking-tight uppercase">
+                Plataforma Protocolo 2038
+            </h2>
+            <div class="w-12 h-1 bg-indigo-400 mt-2 rounded-full mx-auto md:mx-0"></div>
+        </div>
+        
+        <!-- Seletor de Rodadas (Painel de Inteligência) -->
+        <div class="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
+            <button onclick="mudarRodada(1)" id="btn-tab-1" class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-sm bg-indigo-600 text-white border border-indigo-500">
+                Rodada 1: Recomposição
+            </button>
+            <button onclick="mudarRodada(2)" id="btn-tab-2" class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Rodada 2: Retenção & Clima
+            </button>
+            <button onclick="mudarRodada(3)" id="btn-tab-3" class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Rodada 3: Cultura & IA
+            </button>
+        </div>
+
+        <!-- Painel Central de Informações -->
         <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-slate-100 transition-all duration-300 hover:shadow-2xl">
             <div class="flex items-center space-x-3 mb-6">
                 <span class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
                     <!-- Ícone de Painel -->
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
                 </span>
-                <h3 class="text-2xl font-bold text-slate-800">PAINEL DE INTELIGÊNCIA (IA)</h3>
+                <h3 class="text-2xl font-bold text-slate-800 tracking-tight" id="round-title">PAINEL DE INTELIGÊNCIA (IA)</h3>
             </div>
             
-            <p class="text-slate-600 mb-6 leading-relaxed">
+            <p class="text-slate-600 mb-6 leading-relaxed text-base" id="round-context">
                 O sistema central identificou uma mudança estrutural relevante após analisar os indicadores de mercado da <strong>empresa cliente</strong> sob o escopo deste treinamento de liderança.
             </p>
             
             <!-- Indicadores de Mercado -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 text-center transition-all duration-200 hover:bg-slate-100">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Mercado</span>
-                    <strong class="text-2xl text-slate-800 block font-bold">+41%</strong>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1" id="lbl-ind-1">Mercado</span>
+                    <strong class="text-2xl text-slate-800 block font-black" id="val-ind-1">+41%</strong>
                 </div>
                 <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 text-center transition-all duration-200 hover:bg-slate-100">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Horizonte</span>
-                    <strong class="text-2xl text-slate-800 block font-bold">8 Meses</strong>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1" id="lbl-ind-2">Horizonte</span>
+                    <strong class="text-2xl text-slate-800 block font-black" id="val-ind-2">8 Meses</strong>
                 </div>
                 <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 text-center transition-all duration-200 hover:bg-slate-100">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Participação de Mercado</span>
-                    <strong class="text-2xl text-slate-800 block font-bold">12,4%</strong>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1" id="lbl-ind-3">Participação de Mercado</span>
+                    <strong class="text-2xl text-slate-800 block font-black" id="val-ind-3">12,4%</strong>
                 </div>
             </div>
             
-            <!-- Caixa de Recomendação Inicial do Sistema -->
+            <!-- Caixa de Recomendação Inicial do Advisor -->
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-indigo-600 gap-6">
                 <div class="flex-1">
-                    <h4 class="font-bold text-indigo-900 flex items-center gap-2 mb-1">
+                    <h4 class="font-bold text-indigo-900 flex items-center gap-2 mb-1 text-sm md:text-base">
                         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        Análise de Recomposição de Carteira:
+                        Recomendação da IA da Xpetaculab (Advisor):
                     </h4>
-                    <p class="text-indigo-950 text-sm leading-relaxed">
+                    <p class="text-indigo-950 text-sm leading-relaxed" id="round-recommendation">
                         Descontinuar progressivamente 40% do portfólio de baixo rendimento da empresa cliente e redirecionar capital para soluções de aprendizagem corporativa personalizadas.
                     </p>
                 </div>
@@ -100,7 +123,7 @@
             </div>
             
             <form id="decisaoForm" onsubmit="enviarParaGoogle(event)" class="space-y-6">
-                <!-- E-mail Oculto do Responsável (Sempre cpfaguiar@gmail.com como solicitado) -->
+                <!-- E-mail Oculto do Responsável -->
                 <input type="hidden" name="email" id="email" value="cpfaguiar@gmail.com">
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -117,7 +140,7 @@
                             <option value="Aprovar integralmente.">Aprovar integralmente.</option>
                             <option value="Aprovar com ajustes estratégicos.">Aprovar com ajustes estratégicos.</option>
                             <option value="Construir estratégia alternativa.">Construir estratégia alternativa.</option>
-                            <option value="Abrir nova janela de perspectiva.">Abrir nova janela de perspectiva.</option>
+                            <option value="Abrir nova perspectiva.">Abrir nova perspectiva.</option>
                         </select>
                     </div>
                 </div>
@@ -128,7 +151,7 @@
                     <textarea name="justificativa" id="justificativa" required class="w-full p-3 rounded-xl text-slate-900 bg-white focus:ring-2 focus:ring-indigo-500 h-32 focus:outline-none" placeholder="Escreva de forma detalhada o parecer ou justificativa do Conselho quanto ao direcionamento da empresa cliente..."></textarea>
                 </div>
 
-                <!-- Painel Integrado da Consulta de Inteligência Artificial -->
+                <!-- Painel Integrado da Consulta de Inteligência Artificial Advisor -->
                 <div id="ai-consultation-area" class="border-t border-slate-800 pt-6 mt-8">
                     <button type="button" id="btnConsultarIA" onclick="consultarIA()" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold py-3 px-6 rounded-xl transition duration-200 shadow-lg flex items-center justify-center gap-2">
                         <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -139,7 +162,7 @@
                     <div id="ai-response-display" class="hidden mt-4 p-5 bg-slate-950 border border-indigo-950 rounded-xl text-sm leading-relaxed text-slate-200 relative">
                         <div class="absolute top-3 left-4 flex items-center space-x-2 text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3">
                             <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping"></span>
-                            <span>Recomendação de IA da Xpetaculab | Advisor Estratégico</span>
+                            <span>Recomendação de IA da Xpetaculab | Advisor para a Empresa Cliente</span>
                         </div>
                         <div id="ai-response-text" class="pt-6 font-serif whitespace-pre-wrap text-slate-300"></div>
                     </div>
@@ -168,8 +191,50 @@
     </footer>
 
     <script>
+        // Endpoint seguro do Apps Script que você atualizou
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygbCmz14jMG-EZokcdT3YIe0v0btT4Wny_w-PREOhwwhg3SNOGTrsKCVhoa3baP5hz/exec';
         let hasConsultedAI = false;
+        let rodadaAtiva = 1;
+
+        // Base de Dados Simulada de Rodadas baseada nos Exemplos do Treinamento
+        const DADOS_RODADAS = {
+            1: {
+                titulo: "PAINEL DE INTELIGÊNCIA (IA) - RODADA 1",
+                contexto: "O sistema central identificou uma mudança estrutural relevante após analisar os indicadores de mercado da <strong>empresa cliente</strong> sob o escopo deste treinamento de liderança.",
+                ind1_lbl: "Mercado",
+                ind1_val: "+41%",
+                ind2_lbl: "Horizonte",
+                ind2_val: "8 Meses",
+                ind3_lbl: "Participação de Mercado",
+                ind3_val: "12,4%",
+                recomendacao: "Descontinuar progressivamente 40% do portfólio de baixo rendimento da empresa cliente e redirecionar capital para soluções de aprendizagem corporativa personalizadas.",
+                opcaoPrevia: "Aprovar integralmente."
+            },
+            2: {
+                titulo: "PAINEL DE INTELIGÊNCIA (IA) - RODADA 2",
+                contexto: "O Advisor analisou dados de engajamento interno e registrou um esgotamento agudo nos times técnicos da <strong>empresa cliente</strong>, comprometendo o ritmo das entregas e escalabilidade.",
+                ind1_lbl: "Turnover de Talentos",
+                ind1_val: "+18%",
+                ind2_lbl: "Horizonte",
+                ind2_val: "12 Meses",
+                ind3_lbl: "Clima Organizacional (eNPS)",
+                ind3_val: "32 ptos",
+                recomendacao: "Implementar um plano corporativo transversal de Humanização & Mentoria de Líderes, visando frear o turnover e restabelecer a segurança psicológica dos times da empresa cliente.",
+                opcaoPrevia: "Aprovar com ajustes estratégicos."
+            },
+            3: {
+                titulo: "PAINEL DE INTELIGÊNCIA (IA) - RODADA 3",
+                contexto: "Com base na aceleração tecnológica acelerada de competidores, o Advisor mediu a aderência dos colaboradores às novas ferramentas digitais no dia a dia operacional da <strong>empresa cliente</strong>.",
+                ind1_lbl: "Demanda por Up-skilling",
+                ind1_val: "+75%",
+                ind2_lbl: "Horizonte",
+                ind2_val: "6 Meses",
+                ind3_lbl: "Prontidão Tecnológica (IA)",
+                ind3_val: "45%",
+                recomendacao: "Estruturar com urgência um Comitê de Cultura e Prontidão Tecnológica, priorizando a capacitação contínua e ética em inteligência artificial e soluções de automação da empresa cliente.",
+                opcaoPrevia: "Construir estratégia alternativa."
+            }
+        };
 
         /**
          * Exibe um alerta personalizado na tela sem utilizar alert() nativo
@@ -184,6 +249,47 @@
             setTimeout(() => {
                 toast.classList.add('hidden');
             }, 5000);
+        }
+
+        /**
+         * Alterna dinamicamente os dados do painel entre as 3 rodadas
+         */
+        function mudarRodada(numero) {
+            rodadaAtiva = numero;
+            const dados = DADOS_RODADAS[numero];
+            
+            // Atualiza os botões visuais
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`btn-tab-${i}`);
+                if (i === numero) {
+                    btn.className = "px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-sm bg-indigo-600 text-white border border-indigo-500";
+                } else {
+                    btn.className = "px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 shadow-sm bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
+                }
+            }
+
+            // Atualiza os dados na tela com transição suave
+            const mainContent = document.getElementById('round-title').parentNode.parentNode;
+            mainContent.classList.add('opacity-40');
+            
+            setTimeout(() => {
+                document.getElementById('round-title').innerText = dados.titulo;
+                document.getElementById('round-context').innerHTML = dados.contexto;
+                document.getElementById('lbl-ind-1').innerText = dados.ind1_lbl;
+                document.getElementById('val-ind-1').innerText = dados.ind1_val;
+                document.getElementById('lbl-ind-2').innerText = dados.ind2_lbl;
+                document.getElementById('val-ind-2').innerText = dados.ind2_val;
+                document.getElementById('lbl-ind-3').innerText = dados.ind3_lbl;
+                document.getElementById('val-ind-3').innerText = dados.ind3_val;
+                document.getElementById('round-recommendation').innerText = dados.recomendacao;
+                
+                // Oculta painéis interativos se estivessem abertos, forçando fluxo limpo
+                document.getElementById('interacao-section').classList.add('hidden');
+                
+                mainContent.classList.remove('opacity-40');
+            }, 200);
+
+            showToast(`Painel atualizado para a Rodada ${numero}!`, 'success');
         }
 
         /**
@@ -208,6 +314,9 @@
             `;
             btnIA.className = "w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold py-3 px-6 rounded-xl transition duration-200 shadow-lg flex items-center justify-center gap-2";
             hasConsultedAI = false;
+
+            // Pré-seleciona a melhor opção recomendável para a rodada atual
+            document.getElementById('opcao').value = DADOS_RODADAS[rodadaAtiva].opcaoPrevia;
 
             // Gera um número randômico exclusivo entre 1001 e 9999
             const randomNum = Math.floor(Math.random() * (9999 - 1001 + 1)) + 1001;
@@ -246,17 +355,24 @@
             `;
             btn.disabled = true;
             
-            displayText.innerText = "Analisando fundamentação e gerando recomendações para a empresa cliente...";
+            displayText.innerText = "Analisando fundamentação e gerando recomendações para a empresa cliente de acordo com os cenários da Rodada " + rodadaAtiva + "...";
             display.classList.remove('hidden');
 
             try {
+                // Monta o payload completo com os dados contextuais da rodada e a escolha do comitê
+                const payload = { 
+                    action: "consultarIA", 
+                    rodada: rodadaAtiva,
+                    tema: DADOS_RODADAS[rodadaAtiva].titulo,
+                    opcaoSelecionada: document.getElementById('opcao').value,
+                    indicadores: `Ind1: ${DADOS_RODADAS[rodadaAtiva].ind1_val}, Ind2: ${DADOS_RODADAS[rodadaAtiva].ind2_val}, Ind3: ${DADOS_RODADAS[rodadaAtiva].ind3_val}`,
+                    justificativa: justificativa 
+                };
+
                 // Envia a requisição de consulta segura para o seu Apps Script
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ 
-                        action: "consultarIA", 
-                        justificativa: justificativa 
-                    })
+                    body: JSON.stringify(payload)
                 });
                 
                 if (!response.ok) {
@@ -280,11 +396,11 @@
             } catch (error) {
                 console.error("Erro na consulta da IA:", error);
                 
-                // Exibe uma caixa informativa de erro no próprio display
+                // Exibe uma caixa informativa de erro no próprio display com instruções claras
                 displayText.innerHTML = `
                     <div class="text-red-400 font-bold mb-2">Erro de Comunicação com o Servidor</div>
                     <p class="text-slate-300 text-xs leading-relaxed mb-3">
-                        Não foi possível estabelecer contato com o servidor do Google Apps Script.
+                        Não foi possível estabelecer contato com o servidor do Google Apps Script para a Rodada ${rodadaAtiva}.
                     </p>
                     <div class="bg-slate-900 p-3 rounded border border-red-950 text-[11px] text-slate-400 font-sans">
                         <strong>Passos para correção do desenvolvedor:</strong>
@@ -328,14 +444,14 @@
             const dados = {
                 action: "registrar",
                 email: document.getElementById('email').value,
-                conselho: document.getElementById('conselho').value,
+                conselho: `Conselho ID ${document.getElementById('conselho').value} - Rodada ${rodadaAtiva}`,
                 opcao: document.getElementById('opcao').value,
                 justificativa: document.getElementById('justificativa').value,
                 aiResponse: aiResponseText
             };
 
             try {
-                // Envia em modo no-cors para registrar
+                // Envia em modo no-cors para registrar com segurança
                 await fetch(SCRIPT_URL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
